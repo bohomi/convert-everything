@@ -34,10 +34,10 @@ export default function LengthConverter(props) {
   const handleFromValueChange = event => {
     const fromValue = event.target.value;
     const toValue =
-      fromValue.trim() === ""
+      fromValue.trim() === "" || isNaN(parseFloat(fromValue))
         ? ""
         : LENGTH_COVERSIONS[values.from.unit + "To" + values.to.unit](
-            fromValue
+            parseFloat(fromValue)
           );
 
     setValues({
@@ -60,11 +60,12 @@ export default function LengthConverter(props) {
 
   const handleToValueChange = event => {
     const toValue = event.target.value;
-
     const fromValue =
-      toValue.trim() === ""
+      toValue.trim() === "" || isNaN(parseFloat(toValue))
         ? ""
-        : LENGTH_COVERSIONS[values.to.unit + "To" + values.from.unit](toValue);
+        : LENGTH_COVERSIONS[values.to.unit + "To" + values.from.unit](
+            parseFloat(toValue)
+          );
 
     setValues({
       from: { value: fromValue, unit: values.from.unit },
